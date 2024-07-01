@@ -1,14 +1,15 @@
 <template>
+    <vue-basic-alert :duration="300" :closeIn="2000" ref="alert" />
     <div class="menu-section">
         <div class="heading">
-            <span>menu</span>
-            <h3>our special dishes</h3>
+            <span>menú</span>
+            <h3>Nuestros platillos</h3>
         </div>
 
         <div class="row">
             <div class="col-sm-4 col-12 filter-box">
                 <div class="row search-box">
-                    <input type="text" class="search-input" v-model="foodObj.name" placeholder="Search.." />
+                    <input type="text" class="search-input" v-model="foodObj.name" placeholder="Buscar..." />
                 </div>
 
                 <div class="row filter-drop-down">
@@ -16,53 +17,44 @@
                 </div>
 
                 <div class="row filter-heading">
-                    <h1>Status</h1>
+                    <h1>Estados</h1>
                 </div>
 
                 <div class="row filter-section">
                     <ul class="filter-option">
                         <li>
-                            <input type="button" name="cbStatus" id="bsStatus" value="Best Seller" hidden
+                            <input type="button" name="cbStatus" id="bsStatus" value="Más vendido" hidden
                                 @click="filterStatusBtn($event)" />
-                            <label for="bsStatus" class="d-flex justify-content-between">Best Seller
+                            <label for="bsStatus" class="d-flex justify-content-between">Más vendido
                                 <button class="unselect-btn" @click="unselectStatusBtn($event)"
-                                    value="Best Seller">X</button></label>
+                                    value="Más vendido">X</button></label>
                         </li>
 
 
                         <li>
-                            <input type="button" name="cbStatus" id="ooStatus" value="Online Only" hidden
+                            <input type="button" name="cbStatus" id="soStatus" value="En descuento" hidden
                                 @click="filterStatusBtn($event)" />
-                            <label for="ooStatus" class="d-flex justify-content-between">Online Only <button
+                            <label for="soStatus" class="d-flex justify-content-between">En descuento <button
                                     class="unselect-btn" @click="unselectStatusBtn($event)"
-                                    value="Online Only">X</button></label>
+                                    value="En descuento">X</button></label>
                         </li>
 
 
                         <li>
-                            <input type="button" name="cbStatus" id="soStatus" value="Sale Off" hidden
+                            <input type="button" name="cbStatus" id="sdStatus" value="Platillos de temporada" hidden
                                 @click="filterStatusBtn($event)" />
-                            <label for="soStatus" class="d-flex justify-content-between">Sale Off <button
+                            <label for="sdStatus" class="d-flex justify-content-between">Platillos de temporada <button
                                     class="unselect-btn" @click="unselectStatusBtn($event)"
-                                    value="Sale Off">X</button></label>
+                                    value="Platillos de temporada">X</button></label>
                         </li>
 
 
                         <li>
-                            <input type="button" name="cbStatus" id="sdStatus" value="Seasonal Dishes" hidden
+                            <input type="button" name="cbStatus" id="ndStatus" value="Nuevos platillos" hidden
                                 @click="filterStatusBtn($event)" />
-                            <label for="sdStatus" class="d-flex justify-content-between">Seasonal Dishes <button
+                            <label for="ndStatus" class="d-flex justify-content-between">Nuevos platillos <button
                                     class="unselect-btn" @click="unselectStatusBtn($event)"
-                                    value="Seasonal Dishes">X</button></label>
-                        </li>
-
-
-                        <li>
-                            <input type="button" name="cbStatus" id="ndStatus" value="New Dishes" hidden
-                                @click="filterStatusBtn($event)" />
-                            <label for="ndStatus" class="d-flex justify-content-between">New Dishes <button
-                                    class="unselect-btn" @click="unselectStatusBtn($event)"
-                                    value="New Dishes">X</button></label>
+                                    value="Nuevos platillos">X</button></label>
                         </li>
 
                     </ul>
@@ -70,7 +62,7 @@
                 </div>
 
                 <div class="row filter-heading">
-                    <h1>Price</h1>
+                    <h1>Precio</h1>
                 </div>
 
                 <div class="row filter-section">
@@ -116,22 +108,22 @@
 
 
                 <div class="row filter-heading">
-                    <h1>Type</h1>
+                    <h1>Tipo</h1>
                 </div>
 
                 <div class="row filter-section">
                     <ul class="filter-option">
                         <li>
-                            <input type="button" name="rType" id="mType" value="meat" hidden
+                            <input type="button" name="rType" id="mType" value="carne" hidden
                                 @click="filterTypeBtn($event)" />
-                            <label for="mType" class="d-flex justify-content-between">meat<button class="unselect-btn"
+                            <label for="mType" class="d-flex justify-content-between">carne<button class="unselect-btn"
                                     @click="unselectTypeBtn($event)">X</button></label>
                         </li>
 
                         <li>
-                            <input type="button" name="rType" id="vType" value="vegan" hidden
+                            <input type="button" name="rType" id="vType" value="vegano" hidden
                                 @click="filterTypeBtn($event)" />
-                            <label for="vType" class="d-flex justify-content-between">vegan<button class="unselect-btn"
+                            <label for="vType" class="d-flex justify-content-between">vegano<button class="unselect-btn"
                                     @click="unselectTypeBtn($event)">X</button></label>
                         </li>
 
@@ -142,39 +134,49 @@
             <div class="col-sm-8">
                 <div class="row">
                     <div class="menu-tabs">
-                        <input type="button" id="allFilterFoodBtn" name="allFilterFoodBtn" value="all"
+                        <input type="button" ref="allBtn" id="allFilterFoodBtn" name="allFilterFoodBtn" value="all"
                             class="menu-tab-item" @click="filterFoodBtn($event)" />
-                        <input type="button" id="tacoFilterFoodBtn" name="tacoFilterFoodBtn" class="menu-tab-item"
-                            value="taco" @click="filterFoodBtn($event)" />
-                        <input type="button" id="burritoFilterFoodBtn" name="burritoFilterFoodBtn" class="menu-tab-item"
-                            value="burrito" @click="filterFoodBtn($event)" />
-                        <input type="button" id="nachosFilterFoodBtn" name="nachosFilterFoodBtn" class="menu-tab-item"
-                            value="nachos" @click="filterFoodBtn($event)" />
-                        <input type="button" id="sidesFilterFoodBtn" name="sidesFilterFoodBtn" class="menu-tab-item"
-                            value="sides" @click="filterFoodBtn($event)" />
-                        <input type="button" id="dessertFilterFoodBtn" name="dessertFilterFoodBtn" class="menu-tab-item"
-                            value="dessert" @click="filterFoodBtn($event)" />
-                        <input type="button" id="drinkFilterFoodBtn" name="drinkFilterFoodBtn" class="menu-tab-item"
-                            value="drink" @click="filterFoodBtn($event)" />
+                        <input type="button" ref="líquidosBtn" id="líquidosFilterFoodBtn" name="líquidosFilterFoodBtn" class="menu-tab-item"
+                            value="líquidos" @click="filterFoodBtn($event)" />
+                        <input type="button" ref="postresBtn" id="postresFilterFoodBtn" name="postresFilterFoodBtn" class="menu-tab-item"
+                            value="postres" @click="filterFoodBtn($event)" />
+                        <input type="button" ref="principalesBtn" id="principalesFilterFoodBtn" name="principalesFilterFoodBtn" class="menu-tab-item"
+                            value="principales" @click="filterFoodBtn($event)" />
+                        <input type="button" ref="entrantesBtn" id="entrantesFilterFoodBtn" name="entrantesFilterFoodBtn" class="menu-tab-item"
+                            value="entrantes" @click="filterFoodBtn($event)" />
+                        <input type="button" ref="pastasBtn" id="pastasFilterFoodBtn" name="pastasFilterFoodBtn" class="menu-tab-item"
+                            value="pastas" @click="filterFoodBtn($event)" />
+                        <input type="button" ref="panesBtn" id="panesFilterFoodBtn" name="panesFilterFoodBtn" class="menu-tab-item"
+                            value="panes" @click="filterFoodBtn($event)" />
+                        <input type="button" ref="guarnicionesBtn" id="guarnicionesFilterFoodBtn" name="guarnicionesFilterFoodBtn" class="menu-tab-item"
+                            value="guarniciones" @click="filterFoodBtn($event)" />
+                        <input type="button" ref="pizzasBtn" id="pizzasFilterFoodBtn" name="pizzasFilterFoodBtn" class="menu-tab-item"
+                            value="pizzas" @click="filterFoodBtn($event)" />
+                        <input type="button" ref="tacosBtn" id="tacosFilterFoodBtn" name="tacosFilterFoodBtn" class="menu-tab-item"
+                            value="tacos" @click="filterFoodBtn($event)" />
+                        <input type="button" ref="favoriteBtn" id="favoriteFilterFoodBtn" name="favoriteFilterFoodBtn" class="menu-tab-item"
+                            value="favoritos" @click="filterFoodBtn($event)" />
                     </div>
                 </div>
 
                 <div class="row box-container">
                     <div v-for="(f, index) in currentPageItems" :key="index">
                         <div class="box">
-                            <a href="" class="fas fa-heart"></a>
+                            <a v-if="user" :class="[{'favorite': this.allFavoriteFoods.some(favorite => favorite.food_id === f.food_id)} ,'fas fa-heart']" @click="favoriteBtn(f.food_id, this.user.user_id)"></a>
                             <div class="image">
-                                <img :src="require(`../assets/images/${f.food_src}`)" alt="" />
+                                <img :src="f.food_src" alt="" />
                             </div>
                             <div class="content">
                                 <h3>{{ f.food_name }}</h3>
                                 <div class="stars">
-                                    <div v-for="s in Math.floor(parseFloat(f.food_star))" :key="s" class="d-inline">
+                                    <div v-for="s in Math.floor(parseFloat(f.food_star))" :key="'full' + s" class="d-inline">
                                         <i class="fas fa-star"></i>
                                     </div>
-                                    <div v-if="parseFloat(f.food_star) - Math.floor(parseFloat(f.food_star)) == 0.5"
-                                        class="d-inline">
+                                    <div v-if="parseFloat(f.food_star) % 1 >= 0.5" class="d-inline">
                                         <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <div v-for="e in (5 - Math.floor(parseFloat(f.food_star)) - (parseFloat(f.food_star) % 1 >= 0.5 ? 1 : 0))" :key="'empty' + e" class="d-inline">
+                                        <i class="far fa-star"></i>
                                     </div>
                                     <span> ({{ f.food_vote }}) </span>
                                 </div>
@@ -183,10 +185,19 @@
                                 </div>
                                 <div class="price">
                                     ${{ parseFloat(f.food_price) - parseFloat(f.food_discount) }}
-                                    <span v-if="parseFloat(f.food_discount) != 0.00">${{ parseFloat(f.food_price)
-                                    }}</span>
+                                    <span v-if="parseFloat(f.food_discount) != 0.00">${{ parseFloat(f.food_price) }}</span>
                                 </div>
-                                <button class="btn" @click="addItem(index)">Add to cart</button>
+                                <div v-if="user" class="action-container">
+                                    <button class="btn" @click="addToCart(index)">Agregar</button>
+                                    <div class="qty">
+                                        <input type="number" name="qty" id="qty" value="1" min="1" max="1000"
+                                            @change="onQtyChange($event, index)" />
+                                    </div>
+                                </div>
+
+                                <div v-if="user" class="user-rating">
+                                    <i v-for="n in 5" :key="n" class="fas fa-star" :class="{ 'selected': n <= getUserRating(f.food_id) }" @click="rateBtn(f, this.user.user_id, n)"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -202,27 +213,24 @@
                     </div>
                 </div>
                 <div v-if="calculatePages > 1" class="action-row">
-
                     <button v-if="pageNum != 0" @click="previous()" class="action-btn"> {{ "<" }} </button>
-                            <div v-for="(p, i) in calculatePages" :key="i" class="d-inline">
-                                <span v-if="i == pageNum" class="highlight" @click="set(i)">{{ i + 1 }}</span>
-                                <span v-else @click="set(i)">{{ i + 1 }}</span>
-                            </div>
-                            <button v-if="pageNum != calculatePages - 1" @click="next()" class="action-btn"> {{ ">" }}
-                            </button>
+                    <div v-for="(p, i) in calculatePages" :key="i" class="d-inline">
+                        <span v-if="i == pageNum" class="highlight" @click="set(i)">{{ i + 1 }}</span>
+                        <span v-else @click="set(i)">{{ i + 1 }}</span>
+                    </div>
+                    <button v-if="pageNum != calculatePages - 1" @click="next()" class="action-btn"> {{ ">" }}
+                    </button>
                 </div>
             </div>
         </div>
-
-        <QuickView v-if="showQuickView" :food="sendId">
-            <button class="btn" @click="closeView">X</button>
-        </QuickView>
     </div>
 </template>
 
 <script>
-import QuickView from "@/components/QuickView.vue";
+import axios from "axios";
+import { mapActions } from 'vuex';
 import { mapState } from "vuex";
+import VueBasicAlert from 'vue-basic-alert';
 export default {
     name: "Menu",
 
@@ -230,41 +238,87 @@ export default {
         return {
             foodObj: { name: "", category: "", status: [], price: "", type: "" },
 
-            showQuickView: false,
             showDropDown: false,
-            sendId: null,
 
             perPage: 6,
             pageNum: 0,
             previousCategoryClicked: "",
             previousPriceClicked: "",
             previousTypeClicked: "",
+
+            allFavoriteFoods: [],
+            allRateFoods: [],
+            interval: "",
+            qty: [],
         };
     },
 
     computed: {
-        ...mapState(["allFoods"]),
+        ...mapState(["allFoods", "user"]),
 
         filterFoods: function () {
-            return this.allFoods.filter((f) => f.food_name.toLowerCase().match(this.foodObj.name.toLowerCase()) &&
-                (f.food_category.match(this.foodObj.category) || this.foodObj.category == "all" || this.foodObj.category == "") &&
-                (this.evaluatePrice(f, this.foodObj.price)) &&
-                f.food_type.toLowerCase().match(this.foodObj.type.toLowerCase()) &&
-                (this.evaluateStatus(f, this.foodObj.status)));
+            return this.allFoods.filter((food) => {
+                const baseFilter = food.food_name.toLowerCase().includes(this.foodObj.name.toLowerCase()) &&
+                    this.evaluatePrice(food, this.foodObj.price) &&
+                    food.food_type.toLowerCase().includes(this.foodObj.type.toLowerCase()) &&
+                    this.evaluateStatus(food, this.foodObj.status);
+                
+                if (this.foodObj.category === 'favoritos') {
+                    return baseFilter && this.allFavoriteFoods.some(favorite => favorite.food_id === food.food_id);
+                } else {
+                    return baseFilter && 
+                        (food.food_category[0].category_name.includes(this.foodObj.category) || 
+                        this.foodObj.category === "all" || 
+                        this.foodObj.category === "");
+                }
+            });
         },
-        currentPageItems: function () {
+        currentPageItems() {
             return this.filterFoods.slice(this.pageNum * this.perPage, this.pageNum * this.perPage + this.perPage);
         },
-        calculatePages: function () {
-            if (this.filterFoods.length % this.perPage != 0) {
-                return Math.floor((this.filterFoods.length) / this.perPage) + 1;
-            }
-            else {
+        calculatePages() {
+            if (this.filterFoods.length % this.perPage !== 0) {
+                return Math.floor(this.filterFoods.length / this.perPage) + 1;
+            } else {
                 return this.filterFoods.length / this.perPage;
             }
+        },
+    },
+
+    created() {
+        if (this.user) {
+            this.getAllFavoriteFoods();
+            this.getAllRateFoods();
         }
     },
+    
+    mounted() {
+        const currentCategory = this.$route.query.category;
+        const categoryButtonMap = {
+            'líquidos': this.$refs.líquidosBtn,
+            'postres': this.$refs.postresBtn,
+            'principales': this.$refs.principalesBtn,
+            'entrantes': this.$refs.entrantesBtn,
+            'pastas': this.$refs.pastasBtn,
+            'panes': this.$refs.panesBtn,
+            'guarniciones': this.$refs.guarnicionesBtn,
+            'pizzas': this.$refs.pizzasBtn,
+            'tacos': this.$refs.tacosBtn,
+        };
+
+        if (categoryButtonMap[currentCategory]) {
+            categoryButtonMap[currentCategory].click();
+        }
+
+        this.autoUpdate();
+    },
+
+    beforeUnmount() {
+        clearInterval(this.interval)
+    },
+
     methods: {
+        ...mapActions(["getFoodsData"]),
         set(val) {
             this.pageNum = val;
         },
@@ -275,8 +329,8 @@ export default {
             this.pageNum--;
         },
         checkSale: function (food, statusArray) {
-            if (statusArray.includes("Sale Off")) {
-                if (parseFloat(food.food_discount) > 0) {
+            if (statusArray.includes("En descuento")) {
+                if (food.food_discount > 0) {
                     return true;
                 }
                 else {
@@ -286,19 +340,8 @@ export default {
             return true;
         },
         checkBest: function (food, statusArray) {
-            if (statusArray.includes("Best Seller")) {
-                if (food.food_status.includes("best seller")) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            }
-            return true;
-        },
-        checkOnl: function (food, statusArray) {
-            if (statusArray.includes("Online Only")) {
-                if (food.food_status.includes("online only")) {
+            if (statusArray.includes("Más vendido")) {
+                if (food.food_status.some(status => status.status_name === 'más vendido')) {
                     return true;
                 }
                 else {
@@ -308,8 +351,8 @@ export default {
             return true;
         },
         checkSeason: function (food, statusArray) {
-            if (statusArray.includes("Seasonal Dishes")) {
-                if (food.food_status.includes("seasonal dishes")) {
+            if (statusArray.includes("Platillos de temporada")) {
+                if (food.food_status.some(status => status.status_name === 'platillos de temporada')) {
                     return true;
                 }
                 else {
@@ -319,8 +362,8 @@ export default {
             return true;
         },
         checkNew: function (food, statusArray) {
-            if (statusArray.includes("New Dishes")) {
-                if (food.food_status.includes("new dishes")) {
+            if (statusArray.includes("Nuevos platillos")) {
+                if (food.food_status.some(status => status.status_name === 'nuevos platillos')) {
                     return true;
                 }
                 else {
@@ -330,9 +373,8 @@ export default {
             return true;
         },
         evaluateStatus: function (food, statusArray) {
-            this.pageNum = 0;
             if (statusArray.length != 0) {
-                if (this.checkSale(food, statusArray) && this.checkBest(food, statusArray) && this.checkNew(food, statusArray) && this.checkSeason(food, statusArray) && this.checkOnl(food, statusArray)) {
+                if (this.checkSale(food, statusArray) && this.checkBest(food, statusArray) && this.checkNew(food, statusArray) && this.checkSeason(food, statusArray)) {
                     return food;
                 }
             }
@@ -341,7 +383,6 @@ export default {
             }
         },
         evaluatePrice: function (food, priceRange) {
-            this.pageNum = 0;
             var cal = parseFloat(food.food_price) - parseFloat(food.food_discount);
             if (priceRange == "2,5") {
                 if (2 <= cal && cal <= 5) {
@@ -441,10 +482,6 @@ export default {
             document.querySelector(`[for=${this.previousTypeClicked.target.id}]`).querySelector(":scope > button").style.display = "none";
             this.previousTypeClicked = "";
         },
-        addItem: function (index) {
-            this.sendId = parseInt(this.currentPageItems[index].food_id);
-            this.showQuickView = !this.showQuickView;
-        },
 
         closeView: function () {
             this.showQuickView = !this.showQuickView;
@@ -464,10 +501,114 @@ export default {
                 }
             }
             this.showDropDown = !this.showDropDown;
-        }
+        },
 
+        async favoriteBtn(food_id, user_id) {
+            if (this.allFavoriteFoods.some(favorite => favorite.food_id === food_id)) {
+                await axios.delete('/food_favorite/' + user_id + '/' + food_id);
+            } else {
+                const favoriteData = {
+                    food_id: food_id,
+                    user_id: user_id
+                };
+                
+                await axios.post('/food_favorite/', favoriteData);
+            }
+        },
+
+        async getAllFavoriteFoods() {
+            const favorite_foods = (await axios.get('/food_favorite/' + this.user.user_id)).data;
+            this.allFavoriteFoods = favorite_foods;
+        },
+        
+        async rateBtn(food, user_id, rating) {
+            if (this.allRateFoods.some(rate => rate.food_id === food.food_id)) {
+                const rateData = {
+                    rating: rating
+                };
+                await axios.put('/food_rating/' + user_id + '/' + food.food_id, rateData);
+            } else {
+                const rateData = {
+                    food_id: food.food_id,
+                    user_id: user_id,
+                    rating: rating
+                };
+                
+                await axios.post('/food_rating/', rateData);
+            }
+
+            const rate_global = (await axios.get('/food_rating/global/' + food.food_id)).data; 
+                const length = rate_global.length;
+                const sum = rate_global.reduce((acc, curr) => acc + curr.rating, 0);
+                const average = length > 0 ? sum / length : 0;
+
+                const foodData = {
+                    food_star: average,
+                    food_vote: length
+                };
+
+                await axios.put('/foods/rating/' + food.food_id, foodData);
+        },
+
+        async getAllRateFoods() {
+            const rate_foods = (await axios.get('/food_rating/' + this.user.user_id)).data;
+            this.allRateFoods = rate_foods;
+        },
+
+        getUserRating(food_id) {
+            const ratingObj  = this.allRateFoods.find(rate => rate.food_id === food_id);
+            return ratingObj  ? ratingObj.rating : 0;
+        },
+
+        onQtyChange: function (e, index) {
+            if (e.target.value < 1) {
+                e.target.value = 1;
+                this.qty[index] = e.target.value;
+            } else {
+                this.qty[index] = e.target.value;
+            }
+        },
+
+        async addToCart(index) {
+            if (!this.qty[index]) {
+                this.qty[index] = 1;
+            }
+            const food_id = parseInt(this.currentPageItems[index].food_id);
+            let existItem = await axios.get('/cartItem/' + parseInt(this.user.user_id) + '/' + parseInt(food_id));
+
+            if (existItem.data.length == 1) {
+                let data = {
+                    user_id: parseInt(this.user.user_id),
+                    food_id: parseInt(food_id),
+                    item_qty: parseInt(this.qty[index]) + parseInt(existItem.data[0].item_qty)
+                };
+                await axios.put("/cartItem/", data)
+                this.$refs.alert.showAlert('success', 'Gracias!', 'Añadido al carrito satisfactoriamente!')
+
+            } else {
+                let data = {
+                    user_id: parseInt(this.user.user_id),
+                    food_id: parseInt(food_id),
+                    item_qty: parseInt(this.qty[index])
+                };
+
+                await axios.post("/cartItem/", data)
+                this.$refs.alert.showAlert('success', 'Gracias!', 'Añadido al carrito satisfactoriamente!')
+            }
+        },
+
+        autoUpdate: function () {
+            this.interval = setInterval(function () {
+                this.getAllFavoriteFoods();
+                this.getAllRateFoods();
+                this.getFoodsData();
+            }.bind(this), 1000);
+        },
     },
-    components: { QuickView }
+
+    components: {
+        VueBasicAlert
+    }
 };
 </script>
 
@@ -611,9 +752,18 @@ hr {
     cursor: pointer;
 }
 
-.menu-section .box-container .box .fa-heart:hover {
-    color: #27ae60;
+.menu-section .box-container .box .favorite {
+    color: red;
 }
+
+.menu-section .box-container .box .fa-heart:hover {
+    color: rgb(49, 166, 45);
+}
+
+.menu-section .box-container .box .favorite:hover {
+    color: red;
+}
+   
 
 .menu-section .box-container .box .image {
     margin: 1rem 0;
@@ -641,6 +791,19 @@ hr {
     color: #666;
 }
 
+.user-rating {
+    margin-top: 10px;
+}
+
+.user-rating .fa-star {
+    cursor: pointer;
+    color: #ccc;
+}
+
+.user-rating .fa-star.selected {
+    color: #FFD700;
+}
+
 .menu-section .box-container .box .content .desc p {
     font-size: 14px;
     margin: 0;
@@ -655,6 +818,33 @@ hr {
     font-size: 1.5rem;
     color: #666;
     text-decoration: line-through;
+}
+
+.menu-section .box-container .box .content .action-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.menu-section .box-container .box .content .action-container .qty {
+    display: flex;
+    align-items: center;
+}
+
+.menu-section .box-container .box .content .action-container .qty input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.menu-section .box-container .box .content .action-container .qty input[type="number"]:focus {
+    outline: none;
+    border-color: #27ae60;
 }
 
 .menu-section .action-row {
@@ -693,10 +883,17 @@ hr {
 }
 
 @media (min-width: 576px) {
-
     .filter-heading,
     .filter-section {
         display: block !important;
+    }
+    
+    .menu-section .box-container .box .content .action-container {
+        flex-direction: column;
+    }
+
+    .menu-section .box-container .box .content .action-container .qty {
+        margin-top: 10px;
     }
 }
 

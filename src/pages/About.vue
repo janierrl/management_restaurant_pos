@@ -1,23 +1,42 @@
 <template>
     <section class="about-section">
         <div class="heading">
-            <span>sobre nostros</span>
-            <h3>platos de buena calidad</h3>
+            <span>{{ allInfos[6].info_spanish_text }}</span>
+            <h3>{{ allInfos[7].info_spanish_text }}</h3>
         </div>
 
         <div class="row">
             <div class="about-content">
-                <img src="../assets/images/taco-chefcartoon.png" alt="">
                 <div class="about-content-text">
-                    <p>Tanokura le ofrece la oportunidad de saborear exquisitos platos de la gastronomía criolla e internacional, todos elaborados con una calidad excelente que refleja el sello exclusivo y original de un lugar al que, sin duda, deseará regresar.</p>
-                    <p>Los clientes tienen la opción de deleitarse con una comida en el restaurante y sumergirse en la auténtica atmósfera cubana, o bien, pueden solicitar la entrega de comida directamente a sus hogares.</p>
+                    <p>{{ allInfos[8].info_spanish_text }}</p>
+                    <p>{{ allInfos[9].info_spanish_text }}</p>
                 </div>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1094.6830327533353!2d-82.38490784260327!3d22.971462607150333!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88cd65f4fed0d7af%3A0x7b1f20d6e3930891!2sTanokura!5e0!3m2!1ses!2sus!4v1708816744980!5m2!1ses!2sus" 
+                        width="100%" height="100%" style="border:0; border-radius:.5rem;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="icons-container">
+            <div class="icons">
+                <img src="../assets/images/icon-1.png" alt="">
+                <h3>12:00 - 23:00</h3>
+            </div>
+            <div class="icons">
+                <img src="../assets/images/icon-2.png" alt="">
+                <h3>(+53) 7683 2173</h3>
+            </div>
+            <div class="icons">
+                <img src="../assets/images/icon-3.png" alt="">
+                <h3>Calle 403 e/ 180 y 184, Santiago de las Vegas, Boyeros, La Habana</h3>
             </div>
         </div>
 
         <div class="row">
             <div class="about-article">
-                <h3>la comida une a las personas</h3>
+                <h3>{{ allInfos[10].info_spanish_text }}</h3>
             </div>
         </div>
 
@@ -39,8 +58,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
     name: "About",
+
+    computed: {
+        ...mapState(["allInfos"]),
+    }
 };
 </script>
 
@@ -51,19 +75,46 @@ export default {
     padding: 2rem 9%;
 }
 
-.about-section .about-content {
-    display: flex;
-    width: 100%;
-
+.about-section .icons-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-.about-section .about-content img {
-    background-color: rgb(249, 249, 249);
+.about-section .icons-container .icons {
+    border-radius: 1.5rem;
+    padding: 2rem;
+    text-align: center;
+    background: #f7f7f7;
+}
+
+.about-section .icons-container .icons img {
+    height: 6.5rem;
+}
+
+.about-section .icons-container .icons h3 {
+    font-size: 2rem;
+    color: #130f40;
+    margin-top: .5rem;
+}
+
+.about-section .about-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: 100%;
 }
 
 .about-section .about-content .about-content-text {
+    flex: 1;
     font-size: 16px;
-    padding-left: 50px;
+}
+
+.about-section .map-container {
+    flex: 1;
+    min-width: 300px;
+    height: 400px;
 }
 
 .about-section .about-article {
@@ -79,7 +130,6 @@ export default {
     font-size: 32px;
     color: white;
 }
-
 
 .about-section .gallery {
     overflow: hidden;
@@ -120,22 +170,14 @@ export default {
 }
 
 @media (max-width: 768px) {
-    .about-section .about-content img {
-        width: 250px;
-    }
-
     .about-section .gallery .wrapper img:hover {
         transform: scale(2.5);
     }
 }
 
 @media (max-width: 576px) {
-    .about-section .about-content img {
-        width: inherit;
-    }
-
     .about-section .about-content {
-        display: block;
+        flex-direction: column;
     }
 
     .about-section .about-content .about-content-text {
@@ -146,11 +188,6 @@ export default {
         padding: 50px 0px;
     }
 
-    .about-section .gallery .wrapper img {
-        max-width: 100%;
-
-    }
-
     .about-section .gallery .wrapper {
         grid-gap: 2vmin;
     }
@@ -158,6 +195,17 @@ export default {
     .about-section .gallery .wrapper img:hover {
         transform: scale(2);
     }
+}
 
+@media (max-width: 576px) {
+    .about-section .icons-container {
+        grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .about-section .map-container {
+        height: 300px;
+    }
 }
 </style>

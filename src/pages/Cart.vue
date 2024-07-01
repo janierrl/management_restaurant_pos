@@ -2,8 +2,8 @@
     <div class="shopping-cart-section">
 
         <div class="heading">
-            <span>Shopping cart</span>
-            <h3>Good products, fast delivery</h3>
+            <span>Carrito</span>
+            <h3>Buenos productos, entrega rápida</h3>
         </div>
 
         <div class="container">
@@ -15,16 +15,15 @@
                                 <h3>
                                     <p style="font-size: 15px;">{{ filterFoods.length.toString() }}
                                         <span v-if="filterFoods.length < 2">item</span>
-                                        <span v-else>items</span>
-                                    </p>in your cart
+                                        <span v-else>producto(s)</span>
+                                    </p>en tu carrito
                                 </h3>
                             </div>
 
                             <div v-if="!filterFoods.length">
                                 <div class="box-content row no-food">
                                     <div class="content">
-                                        <h2 style="color: #057835fa;">You do not have any items in your cart, go shop
-                                            now!</h2>
+                                        <h2 style="color: #057835fa;">No tienes ningún artículo en tu carrito, ve a comprar ahora!</h2>
                                     </div>
                                     <div class="image">
                                         <img src="../assets/images/notfound.png" alt="" />
@@ -35,19 +34,17 @@
                                 <div v-for="(f, index) in filterFoods" :key="index">
                                     <div class="box-content row">
                                         <div class="image-box col-sm-3" style="padding-left: 0;">
-                                            <img :src="require(`../assets/images/${f.food_src}`)" alt=""
-                                                class="cart-product-img" />
+                                            <img :src="f.food_src" alt="" class="cart-product-img" />
                                         </div>
 
                                         <div class="desc col-sm-4">
                                             <h2 class="item-name">{{ f.food_name }}</h2>
                                             <div class="item-desc">
-                                                <b>Description</b>
+                                                <b>Detalles</b>
                                                 <p>{{ f.food_desc }}</p>
                                             </div>
                                             <button class="btn remove-btn" @click="removeBtn(index)"><i
-                                                    class="fa fa-trash"></i>Remove
-                                                item</button>
+                                                    class="fa fa-trash"></i>Eliminar producto</button>
                                         </div>
 
                                         <div class="item-price col-sm-1">
@@ -65,7 +62,7 @@
 
                                         <div class="item-qty col-sm-2 d-inline">
                                             <label for="iQuantity"
-                                                style="font-size: 12px; padding-right: 2px;">Quantity:</label>
+                                                style="font-size: 12px; padding-right: 2px;">Cantidad:</label>
                                             <input type="number" id="iQuantity" class="form-control item-quantity"
                                                 :value="itemQuantity[index]" min="1" max="1000"
                                                 @change="onQtyChange($event, index)">
@@ -85,11 +82,10 @@
                         </div>
 
                         <div class="box-content row">
-                            <router-link to="/menu" class="btn shop-btn"><i class="fa fa-arrow-left"></i>Continue
-                                shopping</router-link>
+                            <router-link to="/menu" class="btn shop-btn"><i class="fa fa-arrow-left"></i>Seguir comprando</router-link>
                             <button class="btn check-out-btn" style="margin-left: 10px;"
                                 :disabled="filterFoods.length ? false : true" @click="checkOutBtn()"><i
-                                    class="fa fa fa-shopping-cart"></i>Checkout</button>
+                                    class="fa fa fa-shopping-cart"></i>Confirmar</button>
                         </div>
                     </div>
 
@@ -97,17 +93,17 @@
                     <div class="col-md-3">
                         <div class="box">
                             <div class="box-title">
-                                <h3>Cart Summary</h3>
+                                <h3>Resumen de la compra</h3>
                             </div>
 
                             <div class="box-content">
-                                <span>Summary</span>
+                                <span>Resumen</span>
                                 <h3 class="font-bold total-first-price">${{ calculateSummaryPrice()[0] }}</h3>
 
-                                <span>Discount</span>
+                                <span>Descuento</span>
                                 <h3 class="font-bold total-discount">${{ calculateSummaryPrice()[1] }}</h3>
 
-                                <span>Delivery fee</span>
+                                <span>Gastos de envío</span>
                                 <h3 class="font-bold total-delivery">${{ calculateSummaryPrice()[2] }}</h3>
 
                                 <hr />
@@ -118,10 +114,10 @@
                                 <div class="btn-group">
                                     <button class="btn check-out-btn" :disabled="filterFoods.length ? false : true"
                                         @click="checkOutBtn()"><i class="fa fa-shopping-cart"></i>
-                                        Checkout</button>
+                                        Confirmar</button>
                                     <button class="btn cancel-btn" @click="cancelBtn()"
                                         :disabled="filterFoods.length ? false : true">
-                                        Cancel</button>
+                                        Cancelar</button>
                                 </div>
                             </div>
                         </div>
@@ -131,9 +127,9 @@
                                 <h3>Support</h3>
                             </div>
                             <div class="box-content text-center">
-                                <h3><i class="fa fa-phone"></i> +84 123 123 123</h3>
+                                <h3><i class="fa fa-phone"></i> (+53) 7683 2173</h3>
                                 <span class="small">
-                                    Please contact with us if you have any questions. We are avalible 24h.
+                                    Por favor póngase en contacto con nosotros si tiene alguna pregunta
                                 </span>
                             </div>
                         </div>

@@ -2,7 +2,7 @@
     <div class="login-container">
         <div class="login-form-container">
             <form id="loginForm" @submit="handleSubmit" novalidate autocomplete="off">
-                <h3>LOGIN</h3>
+                <h3>INICIAR SESIÓN</h3>
 
                 <div v-if="errors.length" class="error-box">
                     <ul>
@@ -11,18 +11,18 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="email" id="uEmail" name="uEmail" class="form-control" placeholder="enter your email"
+                    <input type="email" id="uEmail" name="uEmail" class="form-control" placeholder="introduce tu correo electrónico"
                         v-model="loginObj.email" />
                 </div>
 
                 <div class="form-group">
                     <input type="password" id="uPass" name="uPass" class="form-control"
-                        placeholder="enter your password" v-model="loginObj.pass" />
+                        placeholder="introduce tu contraseña" v-model="loginObj.pass" />
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="login now" class="btn">
-                    <p>don't have an account? <router-link @click="scrollToTop()" to="/register">create one
+                    <input type="submit" value="inicia sesión ahora" class="btn">
+                    <p>no tienes cuenta? <router-link @click="scrollToTop()" to="/register">crea una
                         </router-link>
                     </p>
                 </div>
@@ -34,7 +34,7 @@
 
 <script>
 import axios from "axios";
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions ,mapState } from "vuex";
 export default {
     name: 'Login',
 
@@ -46,8 +46,14 @@ export default {
         }
     },
 
+    computed: {
+        ...mapState(["errorMessage"]),
+    },
+
     methods: {
         ...mapMutations(["setUser"]),
+        ...mapMutations(["setAdmin"]),
+        ...mapActions(['loginUser']),
 
         scrollToTop() {
             window.scrollTo(0, 0);
@@ -56,6 +62,11 @@ export default {
         async getMatchUser(email) {
             let data = await axios.get('/users/' + email);
             this.matchUser = data.data;
+        },
+
+        async getMatchRole(id) {
+            let data = await axios.get('/roles/' + id);
+            this.matchUser = { ...this.matchUser, ...data.data };
         },
 
         async handleSubmit(e) {
@@ -85,20 +96,32 @@ export default {
                     this.errors.push("Incorrect email or password!")
                 }
                 else {
-                    if (this.matchUser.user_password === this.loginObj.pass) {
-                        this.matchUser.user_password = "";
-                        this.setUser(this.matchUser);
-                        this.$router.push("/");
-                    }
-                    else {
-                        this.errors.push("Incorrect email or password!")
+                    await this.getMatchRole(this.matchUser.role_id);        
+                    try {
+                        const loginData = {
+                            email: this.loginObj.email,
+                            password: this.loginObj.pass
+                        };
+                        
+                        await this.loginUser(loginData);
+                        
+                        if (this.errorMessage) {
+                            this.errors.push("Incorrect email or password!");
+                        } else {
+                            this.setUser(this.matchUser);
+
+                            if (this.matchUser.role_name !== 'client') {
+                                this.setAdmin("admin");
+                            }
+                            this.$router.push("/");
+                        }
+                    } catch (error) {
+                        this.errors.push("Incorrect email or password!");
                     }
                 }
             }
         }
-
     }
-
 }
 </script>
 

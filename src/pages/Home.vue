@@ -2,47 +2,46 @@
     <div>
         <div class="home-main">
             <div class="content">
-                <span>¡bienvenidos amantes de la comida!</span>
-                <h3>Sabor original de Cuba 😋</h3>
-                <p>Garantizamos el uso de alimentos frescos de la mejor calidad. Los clientes disfrutarán de la cocina cubana con sabores explosivos y sofisticados.</p>
+                <span>{{ allInfos[0].info_spanish_text }}</span>
+                <h3>{{ allInfos[1].info_spanish_text }}</h3>
+                <p>{{ allInfos[2].info_spanish_text }}</p>
                 <router-link @click="scrollToTop()" to="/menu" class="btn">ordena ahora</router-link>
             </div>
             <div class="image">
-                <img src="../assets/images/b.png" alt="" class="home-img">
-                <img src="../assets/images/a.png" alt="" class="home-parallax-img">
+                <img src="../assets/images/c.png" alt="" class="home-img">
             </div>
         </div>
 
 
         <div class="home-category">
-            <router-link @click="scrollToTop()" to="/menu" class="box">
-                <img src="../assets/images/taco-img.png" alt="">
-                <h3>taco</h3>
+            <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'líquidos' } }" class="box">
+                <img src="../assets/images/liquido-img.png" alt="">
+                <h3>líquidos</h3>
             </router-link>
 
-            <router-link @click="scrollToTop()" to="/menu" class="box">
-                <img src="../assets/images/burrito-img.png" alt="">
-                <h3>burrito</h3>
+            <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'postres' } }" class="box">
+                <img src="../assets/images/postre-img.png" alt="">
+                <h3>postres</h3>
             </router-link>
 
-            <router-link @click="scrollToTop()" to="/menu" class="box">
-                <img src="../assets/images/nachos-img.png" alt="">
-                <h3>nachos</h3>
+            <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'principales' } }" class="box">
+                <img src="../assets/images/principal-img.png" alt="">
+                <h3>principales</h3>
             </router-link>
 
-            <router-link @click="scrollToTop()" to="/menu" class="box">
-                <img src="../assets/images/salad-img.png" alt="">
-                <h3>sides</h3>
+            <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'entrantes' } }" class="box">
+                <img src="../assets/images/entrante-img.png" alt="">
+                <h3>entrantes</h3>
             </router-link>
 
-            <router-link @click="scrollToTop()" to="/menu" class="box">
-                <img src="../assets/images/dessert-img.png" alt="">
-                <h3>dessert</h3>
+            <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'pastas' } }" class="box">
+                <img src="../assets/images/pasta-img.png" alt="">
+                <h3>pastas</h3>
             </router-link>
 
-            <router-link @click="scrollToTop()" to="/menu" class="box">
-                <img src="../assets/images/coca-img.png" alt="">
-                <h3>drink</h3>
+            <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'panes' } }" class="box">
+                <img src="../assets/images/pan-img.png" alt="">
+                <h3>panes</h3>
             </router-link>
         </div>
 
@@ -51,27 +50,27 @@
                 <div class="grid col-md-4">
                     <img src="../assets/images/dis-1.jpg" alt="">
                     <div class="content">
-                        <span>special offer</span>
-                        <h3>upto 50% off</h3>
-                        <router-link @click="scrollToTop()" to="/menu" class="btn">order now</router-link>
+                        <span>especialidad</span>
+                        <h3>guarniciones</h3>
+                        <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'guarniciones' } }" class="btn">ordenar ahora</router-link>
                     </div>
                 </div>
 
                 <div class="grid col-md-4">
-                    <img src="../assets/images/dis-2.png" alt="">
+                    <img src="../assets/images/dis-2.jpg" alt="">
                     <div class="content center">
-                        <span>special offer</span>
-                        <h3>upto 25% extra</h3>
-                        <router-link @click="scrollToTop()" to="/menu" class="btn">order now</router-link>
+                        <span>especialidad</span>
+                        <h3>pizzas</h3>
+                        <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'pizzas' } }" class="btn">ordenar ahora</router-link>
                     </div>
                 </div>
 
                 <div class="grid col-md-4">
                     <img src="../assets/images/dis-3.jpg" alt="">
                     <div class="content">
-                        <span>limited offer</span>
-                        <h3>100% cashback</h3>
-                        <router-link @click="scrollToTop()" to="/menu" class="btn">order now</router-link>
+                        <span>especialidad</span>
+                        <h3>tacos</h3>
+                        <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'tacos' } }" class="btn">ordenar ahora</router-link>
                     </div>
                 </div>
 
@@ -84,9 +83,9 @@
                 <img src="../assets/images/about-img.jpg" alt="">
             </div>
             <div class="content">
-                <span>¿por qué elegirnos?</span>
-                <h3 class="title">¿qué hace que nuestra comida sea deliciosa?</h3>
-                <p>La comida para nuestros clientes siempre está garantizada de la mejor calidad. Nuestros platos son elaborados por el chef XXX, prometiendo ofrecer sabores explosivos, delicados e impresionantes. Nuestro servicio de entrega es muy profesional, los clientes pueden disfrutar de la misma calidad que en el restaurante.</p>
+                <span>{{ allInfos[3].info_spanish_text }}</span>
+                <h3 class="title">{{ allInfos[4].info_spanish_text }}</h3>
+                <p>{{ allInfos[5].info_spanish_text }}</p>
                 <router-link @click="scrollToTop()" to="/about" class="btn">read more</router-link>
 
                 <div class="icons-container">
@@ -113,8 +112,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
     name: "Home",
+
+    computed: {
+        ...mapState(["allInfos"]),
+    },
 
     methods: {
         scrollToTop() {

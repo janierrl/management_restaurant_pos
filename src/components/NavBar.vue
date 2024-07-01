@@ -7,10 +7,16 @@
 
         <nav class="navbar">
             <router-link @click="scrollToTop()" to="/">inicio</router-link>
-            <router-link @click="scrollToTop()" to="/about">acerca de</router-link>
-            <router-link @click="scrollToTop()" to="/promotions">promociones</router-link>
+            <router-link @click="scrollToTop()" to="/about">sobre nosotros</router-link>
             <router-link @click="scrollToTop()" to="/menu">menú</router-link>
-            <router-link @click="scrollToTop()" to="/table">mesa</router-link>
+            <router-link v-if="this.admin && user.role_name === 'admin'" @click="scrollToTop()" to="/dashboard/users">usuarios</router-link>
+            <router-link v-if="this.admin && user.role_name === 'admin'" @click="scrollToTop()" to="/dashboard/roles">roles</router-link>
+            <router-link v-if="this.admin && user.role_name === 'business owner'" @click="scrollToTop()" to="/dashboard/infos">infos</router-link>
+            <router-link v-if="this.admin && user.role_name === 'business owner'" @click="scrollToTop()" to="/dashboard/statuses">estados</router-link>
+            <router-link v-if="this.admin && user.role_name === 'warehouse manager'" @click="scrollToTop()" to="/dashboard/ingredients">ingredientes</router-link>
+            <router-link v-if="this.admin && user.role_name === 'warehouse manager'" @click="scrollToTop()" to="/dashboard/amount_types">medidas</router-link>
+            <router-link v-if="this.admin && (user.role_name === 'chef' || user.role_name === 'business owner')" @click="scrollToTop()" to="/dashboard/foods">platillos</router-link>
+            <router-link v-if="this.admin && (user.role_name === 'chef' || user.role_name === 'delivery' || user.role_name === 'business owner')" @click="scrollToTop()" to="/dashboard">facturas</router-link>
         </nav>
 
         <div class="icons">
@@ -34,10 +40,13 @@
             <div v-else class="fas fa-user account" style="background: #f38609;color: white;" @click="showLog">
                 <ul class="drop-down-select">
                     <li>
-                        <router-link @click="scrollToTop()" to="/myorder">my orders</router-link>
+                        <router-link @click="scrollToTop()" to="/myorder">mi cuenta</router-link>
                     </li>
                     <li>
-                        <router-link @click="handleLogout" to="/">logout</router-link>
+                        <router-link @click="scrollToTop()" to="/myorder">mis órdenes</router-link>
+                    </li>
+                    <li>
+                        <router-link @click="handleLogout" to="">cerrar sesión</router-link>
                     </li>
                 </ul>
             </div>
@@ -47,12 +56,12 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
     name: 'NavBar',
 
     computed: {
-        ...mapState(["user"])
+        ...mapState(["admin", "user"])
     },
 
     mounted() {
@@ -63,6 +72,8 @@ export default {
     },
 
     methods: {
+        ...mapActions(["logout"]),
+        ...mapMutations(["setAdmin"]),
         ...mapMutations(["setUser"]),
 
         scrollToTop() {
@@ -90,7 +101,10 @@ export default {
         },
 
         handleLogout: function () {
+            this.setAdmin("");
             this.setUser("");
+            this.logout();
+            this.$router.push('/');
         }
     }
 }

@@ -8,7 +8,7 @@
             </h2>
             <div class="product-detail d-flex">
                 <div class="image">
-                    <img :src="require(`../assets/images/${f.food_src}`)" alt="" />
+                    <img :src="f.food_src" alt="" />
                 </div>
                 <div class="content">
                     <p class="desc">{{ f.food_desc }}</p>

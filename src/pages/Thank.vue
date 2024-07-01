@@ -2,29 +2,24 @@
     <div class="thank-container">
         <h1>
             <p>
-                <span>t</span>
-                <span>h</span>
+                <span>g</span>
+                <span>r</span>
                 <span>a</span>
-                <span>n</span>
-                <span>k</span>
-            </p>
-
-            <p>
-                <span>y</span>
-                <span>o</span>
-                <span>u</span>
+                <span>c</span>
+                <span>i</span>
+                <span>a</span>
+                <span>s</span>
+                <span>!</span>
             </p>
         </h1>
 
         <div class="thank-letter">
-            <p v-none>Thank you for giving us your trust!</p>
+            <p v-none>¡Gracias por brindarnos tu confianza!</p>
             <p v-none>
-                We have just confirmed you received your order, and hope you are enjoying it.
-                Every
-                item is handmade by our team, with care to the details, so we can always provide you with the best
-                experience.
+                Acabamos de confirmar que recibió su pedido y esperamos que lo esté disfrutando.
+                Cada artículo está hecho a mano por nuestro equipo, cuidando los detalles, para que siempre podamos brindarte la mejor experiencia.
             </p>
-            <router-link class="btn" to="/menu">Continue Shopping</router-link>
+            <router-link class="btn" to="/menu">Seguir Comprando</router-link>
         </div>
     </div>
 </template>

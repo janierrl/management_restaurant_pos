@@ -1,10 +1,16 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import "@/axios"
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import "@/axios";
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faRobot } from '@fortawesome/free-solid-svg-icons';
 
-createApp(App).use(router).use(store).mount('#app')
+library.add(faRobot);
 
-// npm install vue-router
+const app = createApp(App);
+
+app.component('font-awesome-icon', FontAwesomeIcon);
+app.use(router).use(store).mount('#app');

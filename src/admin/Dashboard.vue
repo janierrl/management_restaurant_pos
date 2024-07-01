@@ -1,51 +1,50 @@
 <template>
     <div class="admin-container">
-        <div class="d-flex justify-content-between">
-            <h1>Hello Admin!</h1>
-            <button class="btn" @click="handleLogout()">Logout</button>
-        </div>
-
         <div class="table-responsive">
             <!-- PROJECT TABLE -->
             <table class="table colored-header datatable project-list">
                 <thead>
                     <tr>
-                        <th>Bill Id</th>
-                        <th>User Id</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>When</th>
-                        <th>Paid</th>
-                        <th>Total</th>
+                        <th>Orden No</th>
+                        <th>Usuario</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
+                        <th>Fecha</th>
+                        <th>Pagado</th>
+                        <th>Estado</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(b) in filterBills.slice().reverse()" :key="b.bill_id">
                         <td>{{ b.bill_id }}</td>
-                        <td>{{ b.user_id }}</td>
+                        <td>{{ b.user_name }}</td>
                         <td>{{ b.bill_phone }}</td>
                         <td>{{ b.bill_address }}</td>
-                        <td>{{ b.bill_when }}</td>
+                        <td>{{ formatDate(b.bill_when) }}</td>
                         <td>{{ b.bill_paid }}</td>
                         <td>${{ b.bill_total }}</td>
                         <td>{{ avaiableStatus[b.bill_status] }}</td>
                         <td>
-                            <button v-if="b.bill_status < 5" class="action-btn" @click="nextStatusBtn(b.bill_id)">
+                            <button class="action-btn" @click="sendBillId(b.bill_id)">
+                                Detalles
+                            </button>
+
+                            <button v-if="b.bill_status < 5" :disabled="(user.role_name === 'delivery' && b.bill_status < 3) || ((user.role_name === 'chef' || user.role_name === 'admin') && b.bill_status > 2)" :class="[{ 'disabled-btn': (user.role_name === 'delivery' && b.bill_status < 3) || ((user.role_name === 'chef' || user.role_name === 'admin') && b.bill_status > 2) }, 'action-btn']" @click="nextStatusBtn(b.bill_id)">
                                 {{ avaiableStatus[b.bill_status + 1] }}
                             </button>
 
-                            <button v-if="b.bill_status == 1" class="cancel-btn" @click="cancelBtn(b.bill_id)">
-                                Cancel
+                            <button v-if="b.bill_status == 1" :disabled="user.role_name === 'delivery'" :class="[{ 'disabled-btn': user.role_name === 'delivery' }, 'cancel-btn']" @click="cancelBtn(b.bill_id)">
+                                Eliminar
                             </button>
 
-                            <button v-else-if="b.bill_status == 5 && b.bill_paid == 'false'" class="paid-btn"
+                            <button v-else-if="b.bill_status == 5 && b.bill_paid == 'false'" :disabled="user.role_name === 'chef' && b.bill_status > 2" :class="[{ 'disabled-btn': user.role_name === 'chef' && b.bill_status > 2 }, 'paid-btn']"
                                 @click="paidBtn(b.bill_id)">
                                 Paid
                             </button>
 
-                            <button v-else-if="b.bill_status == 5 && b.bill_paid == 'true'" class="action-btn"
+                            <button v-else-if="b.bill_status == 5 && b.bill_paid == 'true'" :disabled="user.role_name === 'chef' && b.bill_status > 2" :class="[{ 'disabled-btn': user.role_name === 'chef' && b.bill_status > 2 }, 'action-btn']"
                                 @click="nextStatusBtn(b.bill_id)">
                                 {{ avaiableStatus[b.bill_status + 1] }}
                             </button>
@@ -55,10 +54,15 @@
             </table>
         </div>
     </div>
+
+    <OrderDetails v-if="showOrderDetails" :bill="sendId">
+        <button class="btn" @click="closeView">X</button>
+    </OrderDetails>
 </template>
 
 
 <script>
+import OrderDetails from "@/components/OrderDetails.vue";
 import axios from "axios";
 import { mapState, mapMutations } from "vuex";
 export default {
@@ -90,7 +94,7 @@ export default {
     },
 
     computed: {
-        ...mapState(["allFoods", "admin"]),
+        ...mapState(["allFoods", "admin", "user"]),
 
         filterBills: function () {
             return this.allBills.filter((b) => b.bill_status < 6 && b.bill_status > 0);
@@ -99,9 +103,20 @@ export default {
 
     methods: {
         ...mapMutations(["setAdmin"]),
+        ...mapMutations(["setUser"]),
 
         async getAllBills() {
-            this.allBills = (await axios.get('/billstatus')).data;
+            const bills = (await axios.get('/billstatus')).data;
+
+            for (const bill of bills) {
+                const userId = bill.user_id;
+                const userResponse = await axios.get('/users/id/' + userId);
+                const userName = userResponse.data.user_name;
+                bill.user_name = userName;
+                delete bill.user_id;
+            }
+
+            this.allBills = bills;
         },
 
         sendBillId: function (id) {
@@ -111,10 +126,6 @@ export default {
 
         closeView: function () {
             this.showOrderDetails = !this.showOrderDetails;
-        },
-
-        handleLogout: function () {
-            this.setAdmin("");
         },
 
         async nextStatusBtn(id) {
@@ -132,6 +143,12 @@ export default {
             this.getAllBills();
         },
 
+        formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Intl.DateTimeFormat('es-ES', options).format(date);
+        },
+
         autoUpdate: function () {
             this.interval = setInterval(function () {
                 this.getAllBills();
@@ -139,13 +156,13 @@ export default {
         }
 
     },
+    components: { OrderDetails }
 }
 </script>
 
 <style scoped>
 .admin-container {
     background-color: #fff;
-    height: 100vh;
     padding: 2rem 9%;
     font-size: 16px;
 }
@@ -182,7 +199,13 @@ export default {
     background-color: red;
 }
 
-.action-btn:hover {
+.disabled-btn {
+    cursor: not-allowed;
+    background-color: #dddddd;
+    color: #999999;
+}
+
+.action-btn:hover:not(:disabled) {
     background-color: #27ae60;
 }
 </style>

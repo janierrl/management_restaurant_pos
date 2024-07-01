@@ -12,6 +12,19 @@ import Thank from '../pages/Thank.vue';
 import MyOrder from '../pages/MyOrder.vue';
 import Admin from '../admin/Admin.vue';
 import Dashboard from '../admin/Dashboard.vue';
+import Users from "../admin/Users.vue";
+import Ingredients from "@/admin/Ingredients.vue";
+import RegisterIngredients from "@/pages/RegisterIngredients.vue";
+import AmountTypes from "@/admin/AmountTypes.vue";
+import RegisterAmountTypes from "@/pages/RegisterAmountTypes.vue";
+import Roles from "@/admin/Roles.vue";
+import RegisterRoles from "@/pages/RegisterRoles.vue";
+import Infos from "@/admin/Infos.vue";
+import RegisterInfos from "@/pages/RegisterInfos.vue";
+import Statuses from "@/admin/Statuses.vue";
+import RegisterStatuses from "@/pages/RegisterStatuses.vue";
+import Foods from "@/admin/Foods.vue";
+import RegisterFoods from "@/pages/RegisterFoods.vue";
 
 
 const routes = [
@@ -56,6 +69,36 @@ const routes = [
     component: Register,
   },
   {
+    path: "/register_ingredients",
+    name: "RegisterIngredients",
+    component: RegisterIngredients,
+  },
+  {
+    path: "/register_amount_types",
+    name: "RegisterAmountTypes",
+    component: RegisterAmountTypes,
+  },
+  {
+    path: "/register_roles",
+    name: "RegisterRoles",
+    component: RegisterRoles,
+  },
+  {
+    path: "/register_infos",
+    name: "RegisterInfos",
+    component: RegisterInfos,
+  },
+  {
+    path: "/register_statuses",
+    name: "RegisterStatuses",
+    component: RegisterStatuses,
+  },
+  {
+    path: "/register_foods",
+    name: "RegisterFoods",
+    component: RegisterFoods,
+  },
+  {
     path: "/checkout",
     name: "Checkout",
     component: Checkout,
@@ -76,9 +119,44 @@ const routes = [
     component: Admin,
   },
   {
-    path: "/admin/dashboard",
+    path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/dashboard/users",
+    name: "Users",
+    component: Users,
+  },
+  {
+    path: "/dashboard/ingredients",
+    name: "Ingredients",
+    component: Ingredients,
+  },
+  {
+    path: "/dashboard/amount_types",
+    name: "AmountTypes",
+    component: AmountTypes,
+  },
+  {
+    path: "/dashboard/roles",
+    name: "Roles",
+    component: Roles,
+  },
+  {
+    path: "/dashboard/infos",
+    name: "Infos",
+    component: Infos,
+  },
+  {
+    path: "/dashboard/statuses",
+    name: "Statuses",
+    component: Statuses,
+  },
+  {
+    path: "/dashboard/foods",
+    name: "Foods",
+    component: Foods,
   },
   {
     path: '/:pathMatch(.*)*',

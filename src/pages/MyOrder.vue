@@ -4,26 +4,26 @@
             <div v-for="b in filterBills.slice().reverse()" class="card" :key="b.bill_id">
                 <div class="card-head d-flex flex-wrap flex-sm-nowrap justify-content-between">
                     <div>
-                        <span>Order No - </span>
+                        <span>Órden No - </span>
                         <span>{{ b.bill_id }}</span>
                     </div>
-                    <button @click="sendBillId(b.bill_id)">show order details</button>
+                    <button @click="sendBillId(b.bill_id)">detalles del pedido</button>
                 </div>
 
                 <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between card-summary">
-                    <div class="w-100 text-center py-1 px-2"><span>Paid:</span>{{ " " + b.bill_paid }}
+                    <div class="w-100 text-center py-1 px-2"><span>Pagado:</span>{{ " " + b.bill_paid }}
                     </div>
-                    <div class="w-100 text-center py-1 px-2"><span>Status:</span>{{ " " + avaiableStatus[b.bill_status]
+                    <div class="w-100 text-center py-1 px-2"><span>Estado:</span>{{ " " + avaiableStatus[b.bill_status]
                     }}
                     </div>
-                    <div class="w-100 text-center py-1 px-2"><span>When:</span> {{ b.bill_when }}</div>
+                    <div class="w-100 text-center py-1 px-2"><span>Fecha:</span> {{ b.bill_when }}</div>
                 </div>
                 <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between card-summary">
 
                     <div class="w-100 text-center py-1 px-2"><span>Total:</span> ${{ b.bill_total }}</div>
-                    <div class="w-100 text-center py-1 px-2"><span>Address:</span>{{ " " + b.bill_address }}
+                    <div class="w-100 text-center py-1 px-2"><span>Dirección:</span>{{ " " + b.bill_address }}
                     </div>
-                    <div class="w-100 text-center py-1 px-2"><span>Phone:</span>{{ " " + b.bill_phone }}
+                    <div class="w-100 text-center py-1 px-2"><span>Teléfono:</span>{{ " " + b.bill_phone }}
                     </div>
                 </div>
 
@@ -33,31 +33,31 @@
                             <div class="step-icon-wrap">
                                 <div class="step-icon"><i class="fa-solid fa-utensils"></i></div>
                             </div>
-                            <h4 class="step-title">Confirmed</h4>
+                            <h4 class="step-title">Confirmado</h4>
                         </div>
                         <div class="step" :class="b.bill_status >= 2 ? 'completed' : ''">
                             <div class="step-icon-wrap">
                                 <div class="step-icon"><i class="fa-solid fa-fire-burner"></i></div>
                             </div>
-                            <h4 class="step-title">Preparing</h4>
+                            <h4 class="step-title">Preparando</h4>
                         </div>
                         <div class="step" :class="b.bill_status >= 3 ? 'completed' : ''">
                             <div class="step-icon-wrap">
                                 <div class="step-icon"><i class="fa-solid fa-list-check"></i></div>
                             </div>
-                            <h4 class="step-title">Checking</h4>
+                            <h4 class="step-title">Chequeando</h4>
                         </div>
                         <div class="step" :class="b.bill_status >= 4 ? 'completed' : ''">
                             <div class="step-icon-wrap">
                                 <div class="step-icon"><i class="fa-solid fa-route"></i></div>
                             </div>
-                            <h4 class="step-title">Delivering</h4>
+                            <h4 class="step-title">Entregando</h4>
                         </div>
                         <div class="step" :class="b.bill_status >= 5 ? 'completed' : ''">
                             <div class="step-icon-wrap">
                                 <div class="step-icon"><i class="fa-solid fa-house"></i></div>
                             </div>
-                            <h4 class="step-title">Delivered</h4>
+                            <h4 class="step-title">Entregado</h4>
                         </div>
                     </div>
                 </div>
@@ -67,12 +67,12 @@
 
         <div v-else class="box-content row no-food">
             <div class="content">
-                <h2 style="color: #057835fa;">You do not have any orders yet</h2>
+                <h2 style="color: #057835fa;">Aún no tienes pedidos</h2>
             </div>
             <div>
                 <img src="../assets/images/no-orders.png" alt="" />
             </div>
-            <router-link class="btn" to="/menu">Order now!</router-link>
+            <router-link class="btn" to="/menu">Ordena ahora!</router-link>
         </div>
 
         <OrderDetails v-if="showOrderDetails" :bill="sendId">

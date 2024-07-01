@@ -1,8 +1,8 @@
 <template>
     <div class="promotions">
         <div class="heading">
-            <span>promotions</span>
-            <h3>Best quality with reasonable price</h3>
+            <span>{{ allInfos[11].info_spanish_text }}</span>
+            <h3>{{ allInfos[12].info_spanish_text }}</h3>
         </div>
 
         <div class="promotions-item">
@@ -163,7 +163,7 @@
 
         <div class="promotions-item">
             <div class="content-box">
-                <img src="../assets/images/dis-2.png" alt="">
+                <img src="../assets/images/dis-2.jpg" alt="">
             </div>
 
             <div class="description">
@@ -210,15 +210,20 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
     name: "Promo",
+
+    computed: {
+        ...mapState(["allInfos"]),
+    },
 
     methods: {
         scrollToTop() {
             window.scrollTo(0, 0);
         }
     }
-}
+};
 </script>
 
 <style scoped>

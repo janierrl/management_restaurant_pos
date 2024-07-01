@@ -13,24 +13,22 @@
 
             <div class="box">
                 <h3>nuestro menú</h3>
-                <router-link @click="scrollToTop()" to="/menu"><i class="fas fa-arrow-right"></i> taco</router-link>
-                <router-link @click="scrollToTop()" to="/menu"><i class="fas fa-arrow-right"></i> burrito</router-link>
-                <router-link @click="scrollToTop()" to="/menu"><i class="fas fa-arrow-right"></i> nachos</router-link>
-                <router-link @click="scrollToTop()" to="/menu"><i class="fas fa-arrow-right"></i> side food
-                </router-link>
-                <router-link @click="scrollToTop()" to="/menu"><i class="fas fa-arrow-right"></i> dessert</router-link>
-                <router-link @click="scrollToTop()" to="/menu"><i class="fas fa-arrow-right"></i> drink</router-link>
+                <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'líquidos' } }"><i class="fas fa-arrow-right"></i> líquidos</router-link>
+                <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'postres' } }"><i class="fas fa-arrow-right"></i> postres</router-link>
+                <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'principales' } }"><i class="fas fa-arrow-right"></i> principales</router-link>
+                <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'entrantes' } }"><i class="fas fa-arrow-right"></i> entrantes</router-link>
+                <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'pastas' } }"><i class="fas fa-arrow-right"></i> pastas</router-link>
+                <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'panes' } }"><i class="fas fa-arrow-right"></i> panes</router-link>
+                <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'guarniciones' } }"><i class="fas fa-arrow-right"></i> guarniciones</router-link>
+                <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'pizzas' } }"><i class="fas fa-arrow-right"></i> pizzas</router-link>
+                <router-link @click="scrollToTop()" :to="{ path: '/menu', query: { category: 'tacos' } }"><i class="fas fa-arrow-right"></i> tacos</router-link>
             </div>
 
             <div class="box">
                 <h3>enlaces rápidos</h3>
                 <router-link @click="scrollToTop()" to="/"> <i class="fas fa-arrow-right"></i> inicio</router-link>
                 <router-link @click="scrollToTop()" to="/about"> <i class="fas fa-arrow-right"></i> acerca de</router-link>
-                <router-link @click="scrollToTop()" to="/promotions"> <i class="fas fa-arrow-right"></i> promociones
-                </router-link>
                 <router-link @click="scrollToTop()" to="/menu"> <i class="fas fa-arrow-right"></i> menú</router-link>
-                <router-link @click="scrollToTop()" to="/table"> <i class="fas fa-arrow-right"></i> reservar una mesa
-                </router-link>
             </div>
 
             <div class="box">

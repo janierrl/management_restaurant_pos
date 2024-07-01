@@ -8,7 +8,7 @@
                 <div style="flex: 50%;" v-for="(f, index) in filterFoods" :key="f.food_id">
                     <div class="product-detail d-flex">
                         <div class="image">
-                            <img :src="require(`../assets/images/${f.food_src}`)" alt="" />
+                            <img :src="f.food_src" alt="" />
                         </div>
                         <div class="content">
                             <p class="name">{{ f.food_name }} <span>X {{ item_qty[index] }}</span></p>

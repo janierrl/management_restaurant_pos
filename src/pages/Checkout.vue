@@ -3,12 +3,12 @@
         <div class="checkout-form-container">
             <form id="checkoutForm" @submit="handleSubmit" novalidate autocomplete="off">
                 <div class="checkout-heading">
-                    <h3>Few more step to place your order<span>Total</span></h3>
-                    <h3 v-if="user">{{ user.user_name }}'s Order<span>${{ calculateSummaryPrice()[3] }}</span></h3>
+                    <h3>Unos pasos más para realizar tu pedido<span>Total</span></h3>
+                    <h3 v-if="user">Orden de {{ user.user_name }}<span>${{ calculateSummaryPrice()[3] }}</span></h3>
                 </div>
 
                 <div class="form-group details-group">
-                    <h4>Shipping Details</h4>
+                    <h4>Detalles de envío</h4>
                     <div class="form-group">
                         <input type="text" name="coPhone" id="coPhone" placeholder="Phone number" class="form-control"
                             v-model="checkoutObj.phone" />
@@ -23,55 +23,20 @@
                 </div>
 
                 <div class="form-group details-group">
-                    <h4>Payment Method</h4>
+                    <h4>Método de pago</h4>
                     <div class="form-group">
                         <div class="form-group">
                             <input type="radio" name="payment" value="cash" id="paymentCash"
-                                v-model="checkoutObj.paymentMethod" /><span>Cash</span>
+                                v-model="checkoutObj.paymentMethod" /><span>Efectivo</span>
                             <input type="radio" name="payment" value="card" id="paymentCard"
-                                v-model="checkoutObj.paymentMethod" /><span>Card (Visa)</span>
+                                v-model="checkoutObj.paymentMethod" /><span>Transferencia</span>
                         </div>
                         <p class="error-mess" v-if="errorObj.payErr.length > 0">{{ errorObj.payErr[0] }}</p>
-                    </div>
-
-
-                    <div v-if="checkoutObj.paymentMethod == 'card'">
-                        <div class="form-group">
-                            <input type="text" name="coCardNum" placeholder="Enter your card number" id="coCardNum"
-                                class="form-control" v-model="cardObj.number" size="16" maxlength="16" />
-                            <p class="error-mess" v-if="errorObj.numErr.length > 0">{{ errorObj.numErr[0] }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <input v-upcase type="text" name="coCardName" placeholder="Enter the name in your card "
-                                id="coCardName" class="form-control" v-model="cardObj.name" />
-                            <p class="error-mess" v-if="errorObj.nameErr.length > 0">{{ errorObj.nameErr[0] }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="form-control">
-                                <span
-                                    style="font-size: 1.6rem; position: absolute; margin-left: -5px; margin-top: -11px;">Expiry
-                                    Date:
-                                </span>
-                                <input
-                                    style="position: absolute; margin-left: 100px; margin-top: -12px; background: inherit;"
-                                    type="month" name="coCardEx" id="coCardEx" v-model="cardObj.expiryDate"
-                                    @click="availableTime()" />
-                            </div>
-                            <p class="error-mess" v-if="errorObj.exDateErr.length > 0">{{ errorObj.exDateErr[0] }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" name="coCardCvv" placeholder="CVV" id="coCardCvv" class="form-control"
-                                v-model="cardObj.cvv" />
-                            <p class="error-mess" v-if="errorObj.cvvErr.length > 0">{{ errorObj.cvvErr[0] }}</p>
-                        </div>
                     </div>
                 </div>
 
                 <div v-if="user" class="form-group">
-                    <input type="submit" value="CONFIRM & PAY" class="btn"
+                    <input type="submit" value="CONFIRMAR Y PAGAR" class="btn"
                         :disabled="filterFoods.length ? false : true" />
                 </div>
             </form>
@@ -88,10 +53,16 @@ export default {
     data() {
         return {
             checkoutObj: { phone: "", address: "", paymentMethod: "" },
-            cardObj: { number: "", name: "", expiryDate: "", cvv: "" },
-            errorObj: { phoneErr: [], addressErr: [], payErr: [], numErr: [], nameErr: [], exDateErr: [], cvvErr: [] },
+            errorObj: { phoneErr: [], addressErr: [], payErr: [] },
             cartItem: [],
             itemQuantity: [],
+        }
+    },
+
+    mounted() {
+        if (this.user && this.user.user_phone) {
+            this.checkoutObj.phone = this.user.user_phone;
+            this.checkoutObj.address = this.user.user_address;
         }
     },
 
@@ -162,10 +133,6 @@ export default {
             this.errorObj.phoneErr = [];
             this.errorObj.addressErr = [];
             this.errorObj.payErr = [];
-            this.errorObj.numErr = [];
-            this.errorObj.nameErr = [];
-            this.errorObj.exDateErr = [];
-            this.errorObj.cvvErr = [];
         },
 
         checkEmptyErr: function () {
@@ -186,94 +153,29 @@ export default {
 
             // Phone validate
             if (!this.checkoutObj.phone) {
-                this.errorObj.phoneErr.push('Entering phone number is required');
-            }
-            else {
-                if (!this.checkoutObj.phone.startsWith('84')) {
-                    this.errorObj.phoneErr.push('Phone numbers must start with 84');
+                this.errorObj.phoneErr.push('Es necesario introducir el número de teléfono');
+            } else {
+                if (!this.checkoutObj.phone.startsWith('5')) {
+                    this.errorObj.phoneErr.push('Los números de teléfono deben comenzar con 5');
                 }
 
-                if (this.checkoutObj.phone.length != 11) {
-                    this.errorObj.phoneErr.push('Phone numbers must have exactly 11 digits');
+                if (this.checkoutObj.phone.length != 8) {
+                    this.errorObj.phoneErr.push('Los números de teléfono deben tener exactamente 8 dígitos');
                 }
 
-                if (!/[0-9]{11}/.test(this.checkoutObj.phone)) {
-                    this.errorObj.phoneErr.push('Phone numbers can only contain numbers');
+                if (!/[0-9]{8}/.test(this.checkoutObj.phone)) {
+                    this.errorObj.phoneErr.push('Los números de teléfono solo pueden contener números');
                 }
             }
 
             // Address validate
             if (!this.checkoutObj.address) {
-                this.errorObj.addressErr.push('Entering address is required');
+                this.errorObj.addressErr.push('Es necesario introducir la dirección');
             }
 
-            // Card validate
+            // Payment Method validate
             if (!this.checkoutObj.paymentMethod) {
-                this.errorObj.payErr.push('Selecting payment method is required');
-            }
-            else if (this.checkoutObj.paymentMethod == "card") {
-                if (!this.cardObj.number) {
-                    this.errorObj.numErr.push('Entering card number is required');
-                }
-                else {
-                    if (!this.cardObj.number.startsWith('4')) {
-                        this.errorObj.numErr.push('Visa card numbers must start with 4');
-                    }
-
-                    if (this.cardObj.number.length != 16) {
-                        this.errorObj.numErr.push('Visa card numbers must have exactly 16 digits');
-                    }
-
-                    if (!/[0-9]{16}/.test(this.cardObj.number)) {
-                        this.errorObj.numErr.push('Visa card numbers can only contain numbers');
-                    }
-                }
-
-                if (!this.cardObj.name) {
-                    this.errorObj.nameErr.push('Entering name is required');
-                }
-                else {
-                    if (!/^[A-Za-z]+$/.test(this.cardObj.name.replace(/\s/g, ""))) {
-                        this.errorObj.nameErr.push('A name can only contain letters');
-                    }
-                }
-
-                if (!this.cardObj.expiryDate) {
-                    this.errorObj.exDateErr.push('Entering expiry date is required');
-                }
-
-
-                if (!this.cardObj.cvv) {
-                    this.errorObj.cvvErr.push('Entering cvv code is required');
-                }
-                else {
-                    if (this.cardObj.cvv.length != 3) {
-                        this.errorObj.cvvErr.push('Cvv code must have exactly 3 digits');
-                    }
-
-                    if (!/[0-9]{3}/.test(this.cardObj.cvv)) {
-                        this.errorObj.cvvErr.push('Cvv code can only contain numbers');
-                    }
-                }
-            } else if (this.checkoutObj.paymentMethod == "cash") {
-                this.cardObj.number = "";
-                this.cardObj.name = "";
-                this.cardObj.expiryDate = "";
-                this.cardObj.cvv = "";
-
-                this.errorObj.numErr = [];
-                this.errorObj.nameErr = [];
-                this.errorObj.exDateErr = [];
-                this.errorObj.cvvErr = [];
-            }
-        },
-
-        isPaid: function () {
-            if (this.checkoutObj.paymentMethod == "cash") {
-                return "false"
-            }
-            else if (this.checkoutObj.paymentMethod == "card") {
-                return "true"
+                this.errorObj.payErr.push('Es necesario seleccionar el método de pago');
             }
         },
 
@@ -302,10 +204,6 @@ export default {
                     billId = parseInt(billId.bill_id) + 1
                 }
 
-                this.cartItem.forEach((foodId, index) => {
-                    this.sendBillDetails(billId, foodId, this.itemQuantity[index])
-                });
-
                 var now = new Date();
                 var day = ("0" + now.getDate()).slice(-2);
                 var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -323,11 +221,16 @@ export default {
                     bill_discount: parseInt(this.calculateSummaryPrice()[1]),
                     bill_delivery: parseInt(this.calculateSummaryPrice()[2]),
                     bill_total: parseInt(this.calculateSummaryPrice()[3]),
-                    bill_paid: this.isPaid(),
+                    bill_paid: "false",
                     bill_status: 1
                 }
 
                 axios.post("/billstatus", billStatus);
+
+                this.cartItem.forEach((foodId, index) => {
+                    this.sendBillDetails(billId, foodId, this.itemQuantity[index])
+                });
+
                 axios.delete("/cartItem/" + this.user.user_id);
 
                 this.cartItem = [];
@@ -339,15 +242,6 @@ export default {
         }
     }
 };
-</script>
-
-<script setup>
-// enables v-focus in templates
-const vUpcase = {
-    mounted(el) {
-        el.style.textTransform = "uppercase";
-    }
-}
 </script>
 
 <style scoped>
